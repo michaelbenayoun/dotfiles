@@ -283,6 +283,7 @@ return require('packer').startup(function(use)
   use 'junegunn/fzf.vim'
   use { 'dracula/vim', as = 'dracula' }
   use 'romainl/vim-cool'
+  use 'tpope/vim-obsession'
 
 
   -- Automatically set up your configuration after cloning packer.nvim

@@ -24,4 +24,5 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # neovim
 mkdir -p $HOME/.config/nvim
 ln -sf $PWD/init.lua $HOME/.config/nvim/init.lua
+ln -sf $PWD/coc-settings.json $HOME/.config/nvim/coc-settings.json
 
