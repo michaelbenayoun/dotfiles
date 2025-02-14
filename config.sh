@@ -23,7 +23,8 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # neovim
 mkdir -p $HOME/.config/nvim
 mkdir -p $HOME/.config/nvim/lua/config
+
 ln -sf $PWD/init.lua $HOME/.config/nvim/init.lua
 ln -sf $PWD/lazy.lua $HOME/.config/nvim/lua/config/lazy.lua
 ln -sf $PWD/plugins.lua $HOME/.config/nvim/lua/plugins.lua
-
+ln -sf $PWD/avante.lua $HOME/.config/nvim/lua/config/avante.lua

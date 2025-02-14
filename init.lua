@@ -1,17 +1,9 @@
+-- lazy.nvim
+require("config.lazy")
+
   local cmd = vim.cmd
   local fn = vim.fn
   local g = vim.g
-  local opt = vim.opt
-  
-  -- General edition configuration
-  opt.softtabstop = 2
-  opt.shiftwidth = 2
-  opt.expandtab = true
-  opt.backspace="indent,eol,start"
-  -- opt.pastetoggle="<F12>"
-  
-  -- Plugins mapping
-  g.mapleader = ","
   
   -- fzf
   vim.keymap.set('n', '<C-p>', ':GFiles<CR>')
@@ -39,10 +31,6 @@
   g.fzf_colors["hl+"] = {'fg', 'Statement'}
   
   
--- lazy.nvim
-require("config.lazy")
-vim.opt.laststatus = 3
-
 
 -- Setup language servers.
 local lspconfig = require('lspconfig')
@@ -223,8 +211,6 @@ require("catppuccin").setup({
 -- setup must be called before loading
 cmd[[colorscheme catppuccin]]
 
-opt.laststatus = 0
-opt.guicursor = "i:block"
 -- opt.fillchars:append("vert:|")
 cmd [[hi VertSplit cterm=NONE guibg=NONE]]
 
@@ -234,8 +220,6 @@ cmd [[hi VertSplit cterm=NONE guibg=NONE]]
 -- let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 -- let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
-opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-opt.foldenable = false
 
 -- Support for MDX files with nvim-treesitter
 vim.filetype.add({
