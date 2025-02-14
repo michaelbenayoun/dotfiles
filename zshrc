@@ -1,6 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+export PATH=/opt/homebrew/bin:$PATH
+export PATH=/opt/homebrew/sbin:$PATH
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -9,6 +12,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
+# ZSH_THEME="cappuccin"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -106,21 +110,30 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
+
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+alias vim="nvim"
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba init' !!
-export MAMBA_EXE="/home/michael/.local/bin/micromamba";
-export MAMBA_ROOT_PREFIX="/home/michael/micromamba";
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+export MAMBA_EXE='/opt/homebrew/opt/micromamba/bin/micromamba';
+export MAMBA_ROOT_PREFIX='/Users/michaelbenayoun/micromamba';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__mamba_setup"
 else
-    if [ -f "/home/michael/micromamba/etc/profile.d/micromamba.sh" ]; then
-        . "/home/michael/micromamba/etc/profile.d/micromamba.sh"
-    else
-        export  PATH="/home/michael/micromamba/bin:$PATH"  # extra space after export prevents interference from conda init
-    fi
+    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
+
+
+# To use Homebrew's ruby instead of Mac system ruby.
+if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
+fi
