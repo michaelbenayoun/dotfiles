@@ -85,6 +85,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- GitHub Copilot mappings.
+vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap('i', '<C-l>', 'copilot#Accept("")', { expr = true, silent = true })
+-- Next suggestion
+vim.keymap.set('i', '<M-]>', '<Cmd>call copilot#Next()<CR>', { silent = true })
+-- Previous suggestion
+vim.keymap.set('i', '<M-[>', '<Cmd>call copilot#Previous()<CR>', { silent = true })
+-- Dismiss current suggestion
+vim.keymap.set('i', '<M-x>', '<Cmd>call copilot#Dismiss()<CR>', { silent = true })
+-- Toggle Copilot on/off
+vim.keymap.set('i', '<M-c>', '<Cmd>Copilot toggle<CR>', { silent = true })
+-- Show Copilot suggestions panel
+vim.keymap.set('i', '<M-p>', '<Cmd>Copilot panel<CR>', { silent = true })
+
 -- luasnip setup
 local luasnip = require 'luasnip'
 
