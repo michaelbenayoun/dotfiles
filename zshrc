@@ -86,6 +86,8 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=147'  # soft lavender
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"

@@ -11,12 +11,6 @@ return {
   --   debounce = 600, -- Adjust as needed
   --   throttle = 600, -- Adjust as needed
   -- },
-  claude = {
-    endpoint = "https://api.anthropic.com",
-    model = "claude-3-5-sonnet-20241022",
-    temperature = 0,
-    max_tokens = 4096,
-  },
   behaviour = {
     auto_suggestions = false, -- Experimental stage
     auto_set_highlight_group = true,
