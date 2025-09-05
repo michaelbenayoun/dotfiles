@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Setting up the submodules
-git submodule update --init --recursive
-
 # zsh
 ln -sf $PWD/zshrc $HOME/.zshrc
 ln -sf $PWD/ohmyzsh $HOME/.oh-my-zsh
@@ -28,3 +25,8 @@ ln -sf $PWD/init.lua $HOME/.config/nvim/init.lua
 ln -sf $PWD/lazy.lua $HOME/.config/nvim/lua/config/lazy.lua
 ln -sf $PWD/plugins.lua $HOME/.config/nvim/lua/plugins.lua
 ln -sf $PWD/avante.lua $HOME/.config/nvim/lua/config/avante.lua
+
+# claude-code
+git clone https://github.com/wshobson/agents.git $PWD/claude-code-agents
+ln -sf $PWD/claude-code-agents $HOME/.claude/agents
+echo $PWD/claude-code-agents >> .gitignore
