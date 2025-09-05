@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Setting up the submodules
+git submodule update --init --recursive
+
 # zsh
 ln -sf $PWD/zshrc $HOME/.zshrc
 ln -sf $PWD/ohmyzsh $HOME/.oh-my-zsh
