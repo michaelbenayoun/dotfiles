@@ -33,18 +33,57 @@ require("config.lazy")
   
 
 -- Setup language servers.
-local lspconfig = require('lspconfig')
-lspconfig.pyright.setup {}
-lspconfig.ts_ls.setup {}
-lspconfig.rust_analyzer.setup {
-  -- Server-specific settings. See `:help lspconfig-setup`
+vim.lsp.config.pyright = {
   settings = {
-    ['rust-analyzer'] = {},
+    python = {
+      analysis = {
+        typeCheckingMode = "basic", -- or "strict" for more aggressive checking
+        autoImportCompletions = true,
+      }
+    }
+  }
+}
+
+vim.lsp.config.ruff = {} -- Fast Python linting/formatting
+
+vim.lsp.config.vtsls = {} -- Modern TypeScript server (replaces ts_ls)
+
+vim.lsp.config.rust_analyzer = {
+  settings = {
+    ['rust-analyzer'] = {
+      cargo = { allFeatures = true },
+      checkOnSave = { command = "clippy" },
+      imports = {
+        granularity = {
+          group = "module",
+        },
+        prefix = "self",
+      },
+    },
   },
 }
-lspconfig.clangd.setup {}
-lspconfig.mlir_lsp_server.setup{}
-lspconfig.tblgen_lsp_server.setup{}
+
+vim.lsp.config.clangd = {
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--clang-tidy",
+    "--header-insertion=iwyu",
+  },
+}
+
+vim.lsp.config.mlir_lsp_server = {}
+vim.lsp.config.tblgen_lsp_server = {}
+
+-- Enable all servers
+local servers = {
+  'pyright', 'ruff', 'vtsls', 'rust_analyzer', 
+  'clangd', 'mlir_lsp_server', 'tblgen_lsp_server'
+}
+
+for _, server in ipairs(servers) do
+  vim.lsp.enable(server)
+end
 
 
 -- Global mappings.
