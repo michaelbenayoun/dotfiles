@@ -117,22 +117,7 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=147'  # soft lavender
 
 alias vim="nvim"
 
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'mamba init' !!
-export MAMBA_EXE='/opt/homebrew/opt/micromamba/bin/micromamba';
-export MAMBA_ROOT_PREFIX='/Users/michaelbenayoun/micromamba';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
-else
-    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
-fi
-unset __mamba_setup
-# <<< mamba initialize <<<
-
 
 # To use Homebrew's ruby instead of Mac system ruby.
 if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
@@ -140,4 +125,4 @@ if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
   export PATH=`gem environment gemdir`/bin:$PATH
 fi
 
-. "$HOME/.local/bin/env"
+source "$HOME/.local/bin/env"
