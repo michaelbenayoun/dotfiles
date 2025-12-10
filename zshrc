@@ -126,3 +126,15 @@ if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
 fi
 
 source "$HOME/.local/bin/env"
+
+# Source fzf key bindings and completions
+for fzf_file in key-bindings.zsh completion.zsh; do
+    for fzf_path in \
+        ~/.fzf/$fzf_file \
+        /usr/share/fzf/$fzf_file \
+        /usr/share/doc/fzf/examples/$fzf_file \
+        $(brew --prefix 2>/dev/null)/opt/fzf/shell/$fzf_file
+    do
+        [ -f "$fzf_path" ] && source "$fzf_path" && break
+    done
+done
