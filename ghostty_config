@@ -20,21 +20,28 @@ window-inherit-working-directory = false
 # Cursor
 cursor-style = block
 cursor-style-blink = false
-shell-integration-features = no-cursor
 
+# Mouse
 mouse-hide-while-typing = true
-macos-non-native-fullscreen = true
-keybind = ctrl+f=toggle_fullscreen
 
-link-url = true
+# Clipboard
 copy-on-select = clipboard
+
+# Links & Images
+link-url = true
 image-storage-limit = 320000000
 
+# Shell Integration
+shell-integration-features = ssh-terminfo,ssh-info,sudo,title,no-cursor
 
+# Quick Terminal
 keybind = global:ctrl+`=toggle_quick_terminal
 quick-terminal-position = top
 quick-terminal-animation-duration = 0
 
-macos-option-as-alt = true
+# Keybindings
+keybind = ctrl+f=toggle_fullscreen
 
-shell-integration-features = ssh-terminfo,ssh-env,no-cursor
+# macOS
+macos-non-native-fullscreen = true
+macos-option-as-alt = true

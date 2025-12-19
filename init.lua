@@ -277,3 +277,13 @@ vim.filetype.add({
     mdx = "markdown"
   }
 })
+
+-- Enable system clipboard
+vim.opt.clipboard = 'unnamedplus'
+
+-- Delete goes to black hole
+vim.keymap.set({'n', 'v'}, 'd', '"_d')
+vim.keymap.set('n', 'dd', '"_dd')
+
+-- Leader+x to actually cut (yank + delete)
+vim.keymap.set({'n', 'v'}, '<leader>x', 'd')
