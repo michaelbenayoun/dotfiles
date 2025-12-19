@@ -12,12 +12,9 @@ require("config.lazy")
   vim.keymap.set('n', '<leader>l', ':Buffers<CR>')
   
   g.fzf_colors = { 
-     -- fg = {'fg', 'Normal'},
-     -- bg = {'bg', 'Normal'},
-     -- hl = {'fg', 'Comment'},
-     -- fg+ = {'fg', 'CursorLine', 'CursorColumn', 'Normal'},
-     -- bg+ = {'bg', 'CursorLine', 'CursorColumn'},
-     -- hl+ = {'fg', 'Statement'},
+     fg = {'fg', 'Normal'},
+     bg = {'bg', 'Normal'},
+     hl = {'fg', 'Comment'},
      info = {'fg', 'PreProc'},
      border =  {'fg', 'Class'},
      prompt = {'fg', 'Conditional'},
