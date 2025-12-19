@@ -28,3 +28,9 @@ ln -sf $PWD/init.lua $HOME/.config/nvim/init.lua
 ln -sf $PWD/lazy.lua $HOME/.config/nvim/lua/config/lazy.lua
 ln -sf $PWD/plugins.lua $HOME/.config/nvim/lua/plugins.lua
 ln -sf $PWD/avante.lua $HOME/.config/nvim/lua/config/avante.lua
+
+
+# ghostty
+mkdir -p $HOME/.config/ghostty
+ln -sf $PWD/ghostty_config $HOME/.config/ghostty/config
+echo "Ghostty config linked, please install the theme manually."
