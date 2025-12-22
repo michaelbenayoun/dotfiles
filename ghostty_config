@@ -32,7 +32,7 @@ link-url = true
 image-storage-limit = 320000000
 
 # Shell Integration
-shell-integration-features = ssh-terminfo,ssh-info,sudo,title,no-cursor
+shell-integration-features = ssh-terminfo,ssh-env,sudo,title,no-cursor
 
 # Quick Terminal
 keybind = global:ctrl+`=toggle_quick_terminal
