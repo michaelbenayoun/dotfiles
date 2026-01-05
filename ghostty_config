@@ -26,6 +26,7 @@ mouse-hide-while-typing = true
 
 # Clipboard
 copy-on-select = clipboard
+clipboard-paste-protection = false
 
 # Links & Images
 link-url = true

@@ -278,12 +278,17 @@ vim.filetype.add({
   }
 })
 
--- Enable system clipboard
-vim.opt.clipboard = 'unnamedplus'
+-- Leader+d to delete/cut to system clipboard
+vim.keymap.set({'n', 'v'}, '<leader>d', '"+d')
+vim.keymap.set('n', '<leader>dd', '"+dd')
 
--- Delete goes to black hole
-vim.keymap.set({'n', 'v'}, 'd', '"_d')
-vim.keymap.set('n', 'dd', '"_dd')
+-- Leader+y to yank/copy to system clipboard
+vim.keymap.set({'n', 'v'}, '<leader>y', '"+y')
+vim.keymap.set('n', '<leader>yy', '"+yy')
 
--- Leader+x to actually cut (yank + delete)
-vim.keymap.set({'n', 'v'}, '<leader>x', 'd')
+-- Leader+p to paste from system clipboard
+vim.keymap.set({'n', 'v'}, '<leader>p', '"+p')
+vim.keymap.set({'n', 'v'}, '<leader>P', '"+P')  -- paste before cursor
+
+-- Optional: Leader+p in insert mode
+vim.keymap.set('i', '<leader>p', '<C-r>+')
