@@ -287,8 +287,8 @@ vim.keymap.set({'n', 'v'}, '<leader>y', '"+y')
 vim.keymap.set('n', '<leader>yy', '"+yy')
 
 -- Leader+p to paste from system clipboard
-vim.keymap.set({'n', 'v'}, '<leader>p', '"+p')
-vim.keymap.set({'n', 'v'}, '<leader>P', '"+P')  -- paste before cursor
+vim.keymap.set({'n', 'v'}, '<leader>v', '"+p')
+vim.keymap.set({'n', 'v'}, '<leader>v', '"+P')  -- paste before cursor
 
 -- Optional: Leader+p in insert mode
 vim.keymap.set('i', '<leader>p', '<C-r>+')
