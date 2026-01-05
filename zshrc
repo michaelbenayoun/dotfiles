@@ -36,10 +36,10 @@ alias vim="nvim"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Homebrew paths
-if [-d /opt/homebrew/bin ]; then
+if [ -d /opt/homebrew/bin ]; then
   export PATH=/opt/homebrew/bin:$PATH
 fi
-if [-d /opt/homebrew/sbin ]; then
+if [ -d /opt/homebrew/sbin ]; then
   export PATH=/opt/homebrew/sbin:$PATH
 fi
 
