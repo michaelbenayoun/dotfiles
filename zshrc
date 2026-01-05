@@ -7,6 +7,14 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 # ZSH_THEME="cappuccin"
 
+# Homebrew paths
+if [ -d /opt/homebrew/bin ]; then
+  export PATH=/opt/homebrew/bin:$PATH
+fi
+if [ -d /opt/homebrew/sbin ]; then
+  export PATH=/opt/homebrew/sbin:$PATH
+fi
+
 export ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
 plugins=(
   git
@@ -34,14 +42,6 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 alias vim="nvim"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Homebrew paths
-if [ -d /opt/homebrew/bin ]; then
-  export PATH=/opt/homebrew/bin:$PATH
-fi
-if [ -d /opt/homebrew/sbin ]; then
-  export PATH=/opt/homebrew/sbin:$PATH
-fi
 
 # To use Homebrew's ruby instead of Mac system ruby.
 if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
