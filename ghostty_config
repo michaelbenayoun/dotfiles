@@ -42,6 +42,7 @@ quick-terminal-animation-duration = 0
 
 # Keybindings
 keybind = ctrl+f=toggle_fullscreen
+keybind = shift+enter=text:\n
 
 # macOS
 macos-non-native-fullscreen = true

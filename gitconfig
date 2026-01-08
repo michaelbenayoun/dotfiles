@@ -1,0 +1,11 @@
+[alias]
+    co = checkout
+    br = branch
+    st = status
+    ci = commit
+    df = diff
+
+    # More complex aliases
+    lg = log --oneline --graph --decorate --all
+    unstage = reset HEAD --
+    last = log -1 HEAD
