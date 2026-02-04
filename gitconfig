@@ -9,3 +9,7 @@
     lg = log --oneline --graph --decorate --all
     unstage = reset HEAD --
     last = log -1 HEAD
+
+[user]
+  name = Michael Benayoun
+  email = mickbenayoun@gmail.com
