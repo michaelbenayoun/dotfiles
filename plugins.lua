@@ -33,17 +33,15 @@ return {
     end
   },
 
-  -- LSP and completion
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "hrsh7th/nvim-cmp",
-      "hrsh7th/cmp-nvim-lsp",
-      "saadparwaiz1/cmp_luasnip",
-      "L3MON4D3/LuaSnip",
-    },
+  -- Completion
+{
+  "hrsh7th/nvim-cmp",
+  dependencies = {
+    "hrsh7th/cmp-nvim-lsp",
+    "saadparwaiz1/cmp_luasnip",
+    "L3MON4D3/LuaSnip",
   },
-
+},
   -- FZF
   {
     "junegunn/fzf",
@@ -109,5 +107,23 @@ return {
       },
     },
   },
-  "github/copilot.vim" -- Use this instead of avante for auto-suggestions for now.
+  "github/copilot.vim", -- Use this instead of avante for auto-suggestions for now.
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+  }
 }

@@ -27,99 +27,212 @@ require("config.lazy")
   g.fzf_colors["bg+"] = {'fg', 'CursorLine', 'CursorColumn'}
   g.fzf_colors["hl+"] = {'fg', 'Statement'}
   
-  
+-- =============================================================================
+-- LSP Configuration
+-- =============================================================================
 
--- Setup language servers.
+-- Add capabilities from cmp_nvim_lsp for better completion support
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- -----------------------------------------------------------------------------
+-- Python: Pyright (global) + Ruff (project-local via uv)
+-- -----------------------------------------------------------------------------
 vim.lsp.config.pyright = {
+  cmd = { "pyright-langserver", "--stdio" },
+  filetypes = { "python" },
+  capabilities = capabilities,
+  before_init = function(_, config)
+    local venv = vim.fn.getcwd() .. "/.venv"
+    if vim.fn.isdirectory(venv) == 1 then
+      config.settings.python.pythonPath = venv .. "/bin/python"
+    end
+  end,
   settings = {
+    pyright = {
+      disableOrganizeImports = true,
+    },
     python = {
       analysis = {
-        typeCheckingMode = "basic", -- or "strict" for more aggressive checking
+        typeCheckingMode = "basic",
         autoImportCompletions = true,
-      }
-    }
-  }
-}
-
-vim.lsp.config.ruff = {} -- Fast Python linting/formatting
-
-vim.lsp.config.vtsls = {} -- Modern TypeScript server (replaces ts_ls)
-
-vim.lsp.config.rust_analyzer = {
-  settings = {
-    ['rust-analyzer'] = {
-      cargo = { allFeatures = true },
-      check = {
-        command = "clippy",
-      },
-      imports = {
-        granularity = {
-          group = "module",
+        diagnosticSeverityOverrides = {
+          reportUnusedImport = "none",
+          reportUnusedVariable = "none",
         },
-        prefix = "self",
       },
     },
   },
 }
 
+vim.lsp.config.ruff = {
+  cmd = { "ruff", "server" },
+  filetypes = { "python" },
+  capabilities = capabilities,
+  before_init = function(_, config)
+    local venv = vim.fn.getcwd() .. "/.venv"
+    if vim.fn.isdirectory(venv) == 1 then
+      local ruff_path = venv .. "/bin/ruff"
+      if vim.fn.executable(ruff_path) == 1 then
+        config.cmd = { ruff_path, "server" }
+      else
+        vim.notify("No ruff in .venv, using global", vim.log.levels.WARN)
+      end
+    end
+  end,
+  init_options = {
+    settings = {
+      lineLength = 88,
+      lint = {
+        select = { "E", "F", "UP", "B", "SIM", "I" },
+      },
+    },
+  },
+}
+
+-- -----------------------------------------------------------------------------
+-- Rust: rust-analyzer with clippy
+-- -----------------------------------------------------------------------------
+vim.lsp.config.rust_analyzer = {
+  cmd = { "rust-analyzer" },
+  filetypes = { "rust" },
+  root_markers = { "Cargo.toml", "rust-project.json" },
+  capabilities = capabilities,
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+        loadOutDirsFromCheck = true,
+      },
+      check = {
+        command = "clippy",
+        extraArgs = {
+          "--",
+          "-W", "clippy::pedantic",
+          "-W", "clippy::nursery",
+          "-A", "clippy::module_name_repetitions",
+          "-A", "clippy::too_many_lines",
+        },
+      },
+      procMacro = {
+        enable = true,
+      },
+      imports = {
+        granularity = { group = "module" },
+        prefix = "self",
+      },
+      completion = {
+        postfix = { enable = true },
+      },
+      inlayHints = {
+        bindingModeHints = { enable = true },
+        closureCaptureHints = { enable = true },
+        closureReturnTypeHints = { enable = "with_block" },
+        lifetimeElisionHints = { enable = "skip_trivial" },
+      },
+    },
+  },
+}
+
+-- -----------------------------------------------------------------------------
+-- C/C++: clangd
+-- -----------------------------------------------------------------------------
 vim.lsp.config.clangd = {
+  capabilities = capabilities,
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
   cmd = {
     "clangd",
     "--background-index",
     "--clang-tidy",
     "--header-insertion=iwyu",
+    "--completion-style=detailed",
+    "--function-arg-placeholders",
   },
 }
 
-vim.lsp.config.mlir_lsp_server = {}
-vim.lsp.config.tblgen_lsp_server = {}
+-- -----------------------------------------------------------------------------
+-- MLIR / TableGen
+-- -----------------------------------------------------------------------------
+vim.lsp.config.mlir_lsp_server = { capabilities = capabilities }
+vim.lsp.config.tblgen_lsp_server = { capabilities = capabilities }
 
--- Enable all servers
+-- -----------------------------------------------------------------------------
+-- Enable servers
+-- -----------------------------------------------------------------------------
 local servers = {
-  'pyright', 'ruff', 'vtsls', 'rust_analyzer', 
-  'clangd', 'mlir_lsp_server', 'tblgen_lsp_server'
+  "pyright", "ruff", "rust_analyzer",
+  "clangd", "mlir_lsp_server", "tblgen_lsp_server",
 }
-
 for _, server in ipairs(servers) do
   vim.lsp.enable(server)
 end
 
+-- -----------------------------------------------------------------------------
+-- Inlay hints (enabled by default)
+-- -----------------------------------------------------------------------------
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspInlayHints", {}),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    -- Only enable inlay hints for buffers with valid file paths
+    local bufname = vim.api.nvim_buf_get_name(args.buf)
+    if client and client.supports_method("textDocument/inlayHint") and bufname ~= "" then
+      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+    end
+  end,
+})
 
--- Global mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+-- -----------------------------------------------------------------------------
+-- Diagnostics keymaps (global)
+-- -----------------------------------------------------------------------------
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { desc = "Show diagnostic float" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, { desc = "Diagnostics to loclist" })
 
--- Use LspAttach autocommand to only map the following keys
--- after the language server attaches to the current buffer
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+-- -----------------------------------------------------------------------------
+-- LSP keymaps (buffer-local on attach)
+-- -----------------------------------------------------------------------------
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wl', function()
+    local function map(mode, lhs, rhs, desc)
+      vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, desc = desc })
+    end
+
+    -- Navigation
+    map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+    map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+    map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+    map("n", "gr", vim.lsp.buf.references, "Find references")
+    map("n", "<space>D", vim.lsp.buf.type_definition, "Type definition")
+
+    -- Documentation
+    map("n", "K", vim.lsp.buf.hover, "Hover documentation")
+    map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
+
+    -- Refactoring
+    map("n", "<space>rn", vim.lsp.buf.rename, "Rename symbol")
+    map({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, "Code action")
+    map("n", "<space>f", function()
+      vim.lsp.buf.format({ async = true })
+    end, "Format buffer")
+
+    -- Workspace
+    map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
+    map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
+    map("n", "<space>wl", function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<space>f', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
+    end, "List workspace folders")
+
+    -- Toggle inlay hints
+    map("n", "<space>th", function()
+      vim.lsp.inlay_hint.enable(
+        not vim.lsp.inlay_hint.is_enabled({ bufnr = ev.buf }),
+        { bufnr = ev.buf }
+      )
+    end, "Toggle inlay hints")
   end,
 })
 
