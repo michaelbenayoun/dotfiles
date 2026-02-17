@@ -245,10 +245,41 @@ vim.keymap.set('i', '<M-]>', '<Cmd>call copilot#Next()<CR>', { silent = true })
 vim.keymap.set('i', '<M-[>', '<Cmd>call copilot#Previous()<CR>', { silent = true })
 -- Dismiss current suggestion
 vim.keymap.set('i', '<M-x>', '<Cmd>call copilot#Dismiss()<CR>', { silent = true })
--- Toggle Copilot on/off
-vim.keymap.set('i', '<M-c>', '<Cmd>Copilot toggle<CR>', { silent = true })
+-- Global Copilot toggle function
+local function toggle_copilot_global()
+  if vim.g.copilot_enabled == false then
+    vim.cmd('Copilot enable')
+    vim.g.copilot_enabled = true
+    print('Copilot enabled globally')
+  else
+    vim.cmd('Copilot disable')
+    vim.g.copilot_enabled = false
+    print('Copilot disabled globally')
+  end
+end
+
+-- Toggle Copilot on/off (global) - normal mode
+vim.keymap.set('n', '<leader>cg', toggle_copilot_global, { silent = false, desc = 'Toggle Copilot globally' })
 -- Show Copilot suggestions panel
 vim.keymap.set('i', '<M-p>', '<Cmd>Copilot panel<CR>', { silent = true })
+
+-- Buffer-specific Copilot toggle function
+local function toggle_copilot_buffer()
+  local buf = vim.api.nvim_get_current_buf()
+  if vim.b[buf].copilot_enabled == false then
+    vim.cmd('Copilot enable')
+    vim.b[buf].copilot_enabled = true
+    print('Copilot enabled for this buffer')
+  else
+    vim.cmd('Copilot disable')
+    vim.b[buf].copilot_enabled = false
+    print('Copilot disabled for this buffer')
+    
+  end
+end
+
+-- Toggle Copilot for current buffer - normal mode
+vim.keymap.set('n', '<leader>ct', toggle_copilot_buffer, { silent = false, desc = 'Toggle Copilot for buffer' })
 
 -- luasnip setup
 local luasnip = require 'luasnip'
