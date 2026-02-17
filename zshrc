@@ -65,7 +65,6 @@ for fzf_file in key-bindings.zsh completion.zsh; do
     done
 done
 
-# Add to remote ~/.zshrc
 if ! infocmp "$TERM" &>/dev/null; then
     export TERM=xterm-256color
 fi

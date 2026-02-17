@@ -2,24 +2,24 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function () 
+    config = function ()
       local configs = require("nvim-treesitter.configs")
-      ensure_installed = {
-        "bash",
-        "c",
-        "json",
-        "lua",
-        "markdown",
-        "python",
-        "regex",
-        "rust",
-        "vim",
-        "vimdoc",
-      },
       configs.setup({
+          ensure_installed = {
+            "bash",
+            "c",
+            "json",
+            "lua",
+            "markdown",
+            "python",
+            "regex",
+            "rust",
+            "vim",
+            "vimdoc",
+          },
           sync_install = false,
           highlight = { enable = true },
-          indent = { enable = true },  
+          indent = { enable = true },
           incremental_selection = {
             enable = true,
             keymaps = {

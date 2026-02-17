@@ -13,3 +13,14 @@
 [user]
   name = Michael Benayoun
   email = mickbenayoun@gmail.com
+
+[core]
+  editor = nvim
+  autocrlf = input
+
+[pull]
+  rebase = true
+
+[push]
+  default = current
+  autoSetupRemote = true

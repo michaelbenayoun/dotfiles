@@ -2,7 +2,6 @@
 require("config.lazy")
 
   local cmd = vim.cmd
-  local fn = vim.fn
   local g = vim.g
   
   -- fzf
@@ -407,15 +406,7 @@ require("catppuccin").setup({
 -- setup must be called before loading
 cmd[[colorscheme catppuccin]]
 
--- opt.fillchars:append("vert:|")
 cmd [[hi VertSplit cterm=NONE guibg=NONE]]
-
--- " Color management
--- "set background=dark
--- "set t_Co=256
--- let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
--- let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
-
 
 -- Support for MDX files with nvim-treesitter
 vim.filetype.add({
@@ -432,9 +423,9 @@ vim.keymap.set('n', '<leader>dd', '"+dd')
 vim.keymap.set({'n', 'v'}, '<leader>y', '"+y')
 vim.keymap.set('n', '<leader>yy', '"+yy')
 
--- Leader+p to paste from system clipboard
+-- Leader+v / Leader+V to paste from system clipboard (after / before cursor)
 vim.keymap.set({'n', 'v'}, '<leader>v', '"+p')
-vim.keymap.set({'n', 'v'}, '<leader>v', '"+P')  -- paste before cursor
+vim.keymap.set({'n', 'v'}, '<leader>V', '"+P')
 
 -- Optional: Leader+p in insert mode
 vim.keymap.set('i', '<leader>p', '<C-r>+')

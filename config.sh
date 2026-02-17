@@ -11,13 +11,15 @@ ln -sf $PWD/ohmyzsh $HOME/.oh-my-zsh
 chmod -R g-w,o-w $PWD/ohmyzsh
 
 # OhMyZSH plugins
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+[ -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ] || \
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+[ -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ] || \
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # tmux
 mkdir -p $HOME/.config/tmux
 ln -sf $PWD/tmux.conf $HOME/.config/tmux/tmux.conf
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # neovim
 mkdir -p $HOME/.config/nvim
