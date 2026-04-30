@@ -41,6 +41,16 @@ alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias vim="nvim"
 
+alias sync-aws="~/projects/sync_aws.sh"
+alias sync-sft="~/projects/sync_sft.sh"
+alias sync-forge="~/projects/sync_forge.sh"
+alias start-llama="~/projects/local-llm/start-llama.sh"
+
+# local-llm
+source ~/projects/local-llm/shell/cc-local.sh
+
+alias sft="TERM=xterm-256color sft"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # To use Homebrew's ruby instead of Mac system ruby.

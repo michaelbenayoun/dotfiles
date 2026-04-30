@@ -125,5 +125,12 @@ return {
         desc = "Buffer Local Keymaps (which-key)",
       },
     },
+  },
+  -- Colors for hex codes and more
+  {
+      "catgoose/nvim-colorizer.lua",
+      event = "BufReadPre",
+      opts = {},
   }
 }
+

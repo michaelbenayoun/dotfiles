@@ -33,5 +33,7 @@ echo "  -> Please install the Ghostty theme manually."
 
 echo "Setting up git..."
 ln -sf $PWD/gitconfig $HOME/.gitconfig
+ln -sf $PWD/gitmessage $HOME/.gitmessage
+git config --global commit.template ~/.gitmessage
 
 echo "Done."

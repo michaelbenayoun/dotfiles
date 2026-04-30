@@ -24,3 +24,7 @@
 [push]
   default = current
   autoSetupRemote = true
+[remote]
+	pushDefault = origin
+[commit]
+	template = /Users/michaelbenayoun/.gitmessage
