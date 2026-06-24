@@ -174,7 +174,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     -- Only enable inlay hints for buffers with valid file paths
     local bufname = vim.api.nvim_buf_get_name(args.buf)
-    if client and client.supports_method("textDocument/inlayHint") and bufname ~= "" then
+    if client and client:supports_method("textDocument/inlayHint") and bufname ~= "" then
       vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
     end
   end,

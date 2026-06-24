@@ -15,6 +15,11 @@ if [ -d /opt/homebrew/sbin ]; then
   export PATH=/opt/homebrew/sbin:$PATH
 fi
 
+# Docker
+if [ -d "/Applications/Docker.app/Contents/Resources/bin" ]; then
+  export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
+fi
+
 export ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
 plugins=(
   git
