@@ -49,6 +49,7 @@ alias vim="nvim"
 alias sync-aws="~/projects/sync_aws.sh"
 alias sync-sft="~/projects/sync_sft.sh"
 alias sync-forge="~/projects/sync_forge.sh"
+alias forward-ssh-forge="~/projects/forward-ssh-forge.sh"
 alias start-llama="~/projects/local-llm/start-llama.sh"
 
 # local-llm
